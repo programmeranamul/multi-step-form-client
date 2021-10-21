@@ -1,0 +1,137 @@
+body {
+  direction: rtl !important;
+  overflow-x: hidden;
+}
+.form__header,
+.roubded-7px {
+  border-radius: 7px;
+}
+.font-14 {
+  font-size: 14px;
+}
+.fs-19 {
+  font-size: 19px !important;
+}
+.fs-16{
+  font-size: 16px !important;
+}
+.fs-12 {
+  font-size: 12px;
+}
+.fw-600 {
+  font-weight: 600;
+}
+input[type="date"]::-webkit-input-placeholder {
+  visibility: hidden !important;
+}
+.MuiRadio-colorSecondary.Mui-checked,
+.MuiCheckbox-colorSecondary.Mui-checked {
+  color: rgb(103, 58, 183) !important;
+}
+.custom-color {
+  color: rgb(103, 58, 183) !important;
+}
+.btn-custom {
+  color: rgb(103, 58, 183) !important;
+  font-weight: 500;
+}
+.btn-custom:hover {
+  background-color: rgba(181, 150, 238, 0.1) !important;
+}
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.error {
+  border: 1px solid red;
+}
+.MuiFormHelperText-root {
+  color: red !important;
+}
+.error .MuiInput-underline:before {
+  border-bottom: 1px solid red !important;
+}
+.border-red {
+  border: 0.2px solid #d93025 !important;
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  color: #1a73e8;
+  cursor: pointer;
+  outline: none;
+}
+.before__border {
+  position: relative;
+}
+.before__border::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 10px;
+  background-color: rgb(103, 58, 183);
+  padding: 0 !important;
+  left: 0;
+  border-top-left-radius: 7px;
+  top: 0;
+  border-top-right-radius: 9px;
+}
+.custom-bg {
+  background-color: rgb(103, 58, 183) !important;
+}
+.sub_head_title {
+  border-radius: 7px 7px 0 0;
+}
+.main_bg {
+  background-color: #f0ebfb;
+}
+input[type="text"]:-moz-placeholder {
+  text-align: right;
+}
+input[type="text"]:-ms-input-placeholder {
+  text-align: right;
+}
+input[type="text"]::-webkit-input-placeholder {
+  text-align: right;
+}
+
+.odrer-1{
+  order: 1 !important;
+}
+.menu{
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.responsive_checkbox{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.spinner {
+  animation: spin infinite 1.5s linear;
+
+}
+
+@keyframes spin {
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+}
+
+@media (max-width: 575.98px) { 
+  .responsive_checkbox{
+    grid-template-columns: 1fr 1fr;
+    
+  }
+ }
+@media (max-width: 767.98px) { 
+  .res_flex{
+    flex-direction: column !important;
+  }
+ }
