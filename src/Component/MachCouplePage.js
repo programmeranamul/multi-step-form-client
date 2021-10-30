@@ -3,24 +3,35 @@ import FormHeader from "./FormHeader";
 import TextField from "@material-ui/core/TextField";
 import { BiErrorCircle } from "react-icons/bi";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
+import { FaSpinner } from "react-icons/fa";
+import CoupleMatchResult from "./CoupleMatchResult";
+import { Alert } from "react-bootstrap";
 
 const datas = [
   {
-    name: "yourId",
+    name: "firstSingleId",
     title: " מספר מזהה שלך",
   },
   {
-    name: "otherId",
+    name: "secondSingleId",
     title: "מספר מזהה של הצד השני",
   },
 ];
 
 const MachCouplePage = () => {
-  const [values, setValues] = useState({ yourId: "", otherId: "" });
+  const [values, setValues] = useState({
+    firstSingleId: "",
+    secondSingleId: "",
+  });
   const [showError, setShowError] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(false);
+  const [resError, setResError] = useState(null);
 
   const handelChange = (e) => {
-    console.log(e.target.parentElement);
     const target = e.target;
 
     setValues({ ...values, [target.name]: target.value.trim() });
@@ -33,13 +44,11 @@ const MachCouplePage = () => {
     }
   };
 
-  const handelSubmit = () => {
-    console.log("object", datas.length);
+  const handelSubmit = async () => {
     const errorList = [];
     for (let index = 0; index < datas.length; index++) {
       const name = datas[index].name;
       const value = values[name];
-      console.log(name);
 
       if (value.length < 1) {
         errorList.push(name);
@@ -47,6 +56,27 @@ const MachCouplePage = () => {
     }
     if (errorList.length > 0) {
       setShowError(errorList);
+    } else {
+      setLoading(true);
+      setSuccess(false);
+      setResult(null);
+      setError(false);
+      setResError(null);
+      try {
+        const res = await axios.post(
+          `http://couplesurveybackend-env.eba-cxjumfpr.me-south-1.elasticbeanstalk.com/CoupleSurvey?firstSingleId=${values.firstSingleId}&secondSingleId=${values.secondSingleId}`
+        );
+        console.log(res);
+        setResult(res?.data);
+        setSuccess(true);
+        setLoading(false);
+      } catch (e) {
+        setResError(e?.response?.data);
+        setLoading(false);
+        setError(true);
+        setSuccess(false);
+        setResult(null);
+      }
     }
   };
 
@@ -87,12 +117,21 @@ const MachCouplePage = () => {
 
       <div className="mt-3">
         <Button
+          disabled={loading ? true : false}
           variant="contained"
           className="custom-bg fw-bold fs-12 text-white"
           onClick={handelSubmit}
         >
-          שליחה
+          {loading ? <FaSpinner className="spinner fs-19" /> : "שליחה"}
         </Button>
+      </div>
+      <div className="mt-3">
+        {success && <CoupleMatchResult result={result} />}
+        {error && (
+          <Alert variant="danger" className="ltr">
+            {resError}
+          </Alert>
+        )}
       </div>
     </div>
   );

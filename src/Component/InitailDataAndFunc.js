@@ -81,10 +81,18 @@ export const swithSteps = (
   setShowError,
   createNexFrom,
   handelNext,
-  id
+  id,
+  answer,
+  response,
+  submitLoading,
+  
 ) => {
+
+  console.log("res from initalDtaa", response)
+
+
   switch (step) {
-    case 4:
+    case 1:
       return (
         <FristStep
           value={value}
@@ -120,10 +128,20 @@ export const swithSteps = (
           requiredList={requiredList}
           setRequiredList={setRequiredList}
           handelSubmit={handelSubmit}
+          submitLoading={submitLoading}
         />
       );
-    case 1:
-      return <SubmitForm createNexFrom={createNexFrom} id={id}/>;
+    case 4:
+      return (
+        <SubmitForm
+          value={value}
+          createNexFrom={createNexFrom}
+          id={id}
+          answer={answer}
+          response = {response}
+          
+        />
+      );
     default:
       return (
         <div className="mt-4">

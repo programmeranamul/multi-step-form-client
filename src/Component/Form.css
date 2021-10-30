@@ -2,6 +2,9 @@ body {
   direction: rtl !important;
   overflow-x: hidden;
 }
+.ltr{
+  direction: ltr !important;
+}
 .form__header,
 .roubded-7px {
   border-radius: 7px;
@@ -104,6 +107,8 @@ input[type="text"]::-webkit-input-placeholder {
   font-size: 25px;
   cursor: pointer;
 }
+
+.cursor_pointer{cursor: pointer;}
 
 .responsive_checkbox{
   display: grid !important;

@@ -9,6 +9,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { BiErrorCircle } from "react-icons/bi";
+import { FaSpinner } from 'react-icons/fa';
 
 // 1. map datalist
 // 2.check data type
@@ -24,6 +25,7 @@ const Inputs = ({
   next,
   previous,
   handelSubmit,
+  submitLoading
 }) => {
   return (
     <div className="mb-5 ">
@@ -186,6 +188,7 @@ const Inputs = ({
         )}
         {next && (
           <Button
+          disabled={submitLoading? true : false}
             className="bg-white d-inline-block custom-color fw-bold fs-12"
             variant="outlined"
             onClick={next}
@@ -199,7 +202,7 @@ const Inputs = ({
             className="custom-bg fw-bold fs-12 text-white"
             onClick={handelSubmit}
           >
-            שליחה
+         {submitLoading?  <FaSpinner className="spinner fs-19" /> : "שליחה" }
           </Button>
         )}
       </div>

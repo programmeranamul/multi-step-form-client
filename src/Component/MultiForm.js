@@ -7,13 +7,17 @@ const MultiForm = () => {
   const [states, setStates] = useState(initaleData);
   const [showError, setShowError] = useState([]);
   const [requiredList, setRequiredList] = useState([]);
-  const [id, setId] = useState("")
+  const [id, setId] = useState("");
+  const [answer, setAnswer] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [response, setResponse] = useState("null");
   const { step } = states;
   const value = states;
 
+  console.log("res from multiform", response)
+
   // process next stape
   const next = () => {
- 
     const { step } = states;
     setStates({ ...states, step: step + 1 });
   };
@@ -53,18 +57,28 @@ const MultiForm = () => {
     }
     if (errorList.length > 0) {
       setShowError(errorList);
-    } else {      
-      const res = await axios.post(
-        //"https://guarded-inlet-71859.herokuapp.com/addData",
-        // "http://localhost:9090/addData",
-        "https://arcane-fortress-43890.herokuapp.com/addData",
-        //"https://localhost:5001/SingleSurvey",
-        // "http://couplesurveybackend-env.eba-cxjumfpr.me-south-1.elasticbeanstalk.com/SingleSurvey",
-        value
-      );
-      if (res.status === 201) {
-        setId(res.data._id)
-        next();
+    } else {
+      try {
+        setSubmitLoading(true);
+        const res = await axios.post(
+          //"https://guarded-inlet-71859.herokuapp.com/addData",
+          //"http://localhost:9090/addData",
+          //"https://arcane-fortress-43890.herokuapp.com/addData",
+          //"https://localhost:5001/SingleSurvey",
+          "http://couplesurveybackend-env.eba-cxjumfpr.me-south-1.elasticbeanstalk.com/SingleSurvey",
+          value
+        );
+        if (res.status === 201) {
+          setId(res.data._id);
+          setAnswer(true);
+          setResponse(res.data);
+          setSubmitLoading(false);
+          next();
+        }
+      } catch (e) {
+        setResponse(null);
+        setSubmitLoading(false);
+        console.log(e.response);
       }
     }
   };
@@ -88,13 +102,13 @@ const MultiForm = () => {
         }
       } else {
         const item = showError.find((err) => err === e.target.name);
-        console.log(item, "g");
+
         if (!item) {
           setShowError([...showError, e.target.name]);
         }
       }
     }
-  //if the fild is checkbox    
+    //if the fild is checkbox
     if (e.target.type === "checkbox") {
       const namess = e?.target?.name;
       if (e.target.checked) {
@@ -133,7 +147,10 @@ const MultiForm = () => {
         setShowError,
         createNexFrom,
         handelNext,
-        id
+        id,
+        answer,
+        response,
+        submitLoading
       )}
     </>
   );
